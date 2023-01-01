@@ -4,7 +4,7 @@ import customtkinter
 
 from tkinter import messagebox
 customtkinter.set_appearance_mode("system")
-customtkinter.set_default_color_theme("theme.json")
+customtkinter.set_default_color_theme("HiLo-Gambling-Game\\theme.json")
 
 
 class Main:
@@ -191,9 +191,9 @@ class MainApp:
         self.bets_placed_label.configure(
             text=f"Bets Placed: {self.bets_placed}")
 
-        # Total Money Label
+        # 'Total Winnings' Label
         self.total_money_label.configure(
-            text=f"All Time Earnings: £{self.bank.all_time_earnings}")
+            text=f"All Time Earnings: £{round(self.bank.all_time_earnings, 2)}")
 
     def bet(self, choice):
         if self.bank.money < self.bet_amount:
@@ -211,17 +211,20 @@ class MainApp:
             num, self.num, choice)
         if win:
             odds = [self.odds[0][1], self.odds[1][1], self.odds[2][1]]
+
             self.win_amount = controller.generate_win_amount(
                 odds, self.bet_amount, choice)
             self.win_amount = round(self.win_amount, 2)
             self.bank.win(self.win_amount)
-            self.bank.all_time_earnings += self.win_amount - self.bet_amount
+
+            profits = round(self.win_amount - self.bet_amount, 2)
+            self.bank.all_time_earnings += profits
+
             self.win_loose_label.configure(
-                text=f"WON: £{self.win_amount - self.bet_amount}")
+                text=f"WON: £{profits}")
         else:
             self.win_loose_label.configure(text="Lost!")
 
-        print(self.bank.money)
         self.update_widgets()
 
         if self.bank.money < 10:
