@@ -1,3 +1,4 @@
 # HiLo-Gambling-Game
 
-pip installs needed: customtkinter
+A quick and simple implementation of a higher/lower game with bets.
+Used to learn customtkinter module
